@@ -10,25 +10,34 @@ import React, { Component } from "react";
 export default class App extends Component {
   state = {
     id: uuid(),
-    items: [
-      {
-        id: 1,
-        task: "wake up"
-      },
-      {
-        id: 2,
-        task: "study"
-      }
-    ],
+    items: [],
     item: "",
     editItem: false
   };
 
   handleChange = e => {
-    console.log("handle change");
+    this.setState({
+      item: e.target.value
+    });
+    // console.log("handle change");
   };
   handleSubmit = e => {
-    console.log("handle submit");
+    e.preventDefault();
+    const newItem = {
+      id: this.state.id,
+      task: this.state.item
+    };
+    const updatedItems = [...this.state.items, newItem];
+    this.setState(
+      {
+        items: updatedItems,
+        item: "",
+        id: uuid(),
+        editItem: false
+      },
+      () => console.log("Number of items " + this.state.items.length)
+    );
+    // console.log("handle submit");
   };
   handleEdit = id => {
     console.log(`handle edit $(id)`);
