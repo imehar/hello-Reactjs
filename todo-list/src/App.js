@@ -19,7 +19,6 @@ export default class App extends Component {
     this.setState({
       item: e.target.value
     });
-    // console.log("handle change");
   };
   handleSubmit = e => {
     e.preventDefault();
@@ -37,16 +36,28 @@ export default class App extends Component {
       },
       () => console.log("Number of items " + this.state.items.length)
     );
-    // console.log("handle submit");
   };
   handleEdit = id => {
-    console.log(`handle edit $(id)`);
+    const filterItems = this.state.items.filter(item => item.id != id);
+    const selecedItem = this.state.items.find(item => item.id === id);
+    this.setState({
+      items: filterItems,
+      item: selecedItem.task,
+      editItem: true,
+      id: selecedItem.id
+    });
+    console.log(`handle edit ${id}`);
   };
   handleDelete = id => {
-    console.log(`handle delete $(id)`);
+    const filterItems = this.state.items.filter(item => item.id != id);
+    this.setState({
+      items: filterItems
+    });
   };
   clearList = () => {
-    console.log("clear list");
+    this.setState({
+      items: []
+    });
   };
 
   render() {
@@ -59,7 +70,7 @@ export default class App extends Component {
               item={this.state.item}
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
-              edititem={this.state.editItem}
+              editItem={this.state.editItem}
             />
             <TodoList
               items={this.state.items}
